@@ -1,0 +1,45 @@
+========================================================================
+              SMART AMS - AGENTE DE SUPORTE L1 (GenAI)
+========================================================================
+
+Este projeto e 100% portatil e autocontido.
+Nao e necessario instalar Python, Git ou nenhuma biblioteca no computador!
+
+------------------------------------------------------------------------
+COMO EXECUTAR
+------------------------------------------------------------------------
+1. De dois cliques no arquivo:
+   -> Iniciar_SmartAMS.bat
+   (ou no arquivo "Iniciar_Silencioso.vbs" para iniciar sem exibir janela)
+
+2. O sistema iniciara o servidor local e abrira automaticamente a tela
+   do Smart AMS no seu navegador padrao (http://localhost:8501).
+
+3. Na primeira vez que abrir, caso a chave GOOGLE_API_KEY nao esteja
+   configurada, basta digitar sua chave do Google Gemini diretamente na
+   tela inicial e clicar em "Salvar e Iniciar".
+
+------------------------------------------------------------------------
+COMO ENCERRAR
+------------------------------------------------------------------------
+Basta dar dois cliques no arquivo:
+   -> Parar_SmartAMS.bat
+Ele finalizara o processo em segundo plano liberando a porta.
+
+------------------------------------------------------------------------
+ESTRUTURA DO PACOTE
+------------------------------------------------------------------------
+- Iniciar_SmartAMS.bat   : Inicializador padrao com 1 clique
+- Iniciar_Silencioso.vbs : Inicializador 100% invisivel
+- Parar_SmartAMS.bat     : Encerra o servidor local
+- SmartAms.py            : Codigo principal da aplicacao Streamlit
+- docs/                  : Pasta com os PDFs da base de conhecimento
+- chroma_db/             : Base de dados vetorial pre-processada
+- models/                : Modelo de IA all-MiniLM-L6-v2 salvo localmente
+                           (permite busca vetorial rapida e 100% offline)
+- runtime/               : Interpretador Python e todas as bibliotecas
+                           (PyTorch, Streamlit, LangChain, ChromaDB)
+- setup_script.iss       : Script do Inno Setup (caso deseje gerar um
+                           unico instalador .exe)
+========================================================================
+
