@@ -56,12 +56,28 @@ st.title("🤖 Smart AMS: Agente de Suporte L1 (GenAI)")
 # ==========================================
 # BACKEND (HuggingFace + ChromaDB) — cacheados
 # ==========================================
+# Certifique-se de que o import está no topo do ficheiro (caso não esteja):
+# from sentence_transformers import SentenceTransformer
+
 @st.cache_resource
 def get_embeddings():
-    """Modelo de embeddings carregado uma única vez por sessão do processo."""
-    local_model = os.path.join(base_dir, "models", "all-MiniLM-L6-v2")
-    model_name = local_model if os.path.exists(local_model) else "all-MiniLM-L6-v2"
-    return HuggingFaceEmbeddings(model_name=model_name)
+    """Garante o download local do modelo na primeira vez e devolve o objeto de embeddings."""
+    local_model_path = os.path.join(base_dir, "models", "all-MiniLM-L6-v2")
+    
+    # Se o modelo ainda não existe na pasta local 'models/'
+    if not os.path.exists(local_model_path):
+        st.toast("📥 Baixando modelo de embeddings para a pasta local...", icon="⏳")
+        print("[INFO] Modelo local não encontrado. Baixando da Hugging Face...", flush=True)
+        
+        # Descarrega do Hugging Face e guarda na pasta local
+        from sentence_transformers import SentenceTransformer
+        model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+        model.save(local_model_path)
+        
+        print(f"[INFO] Modelo salvo em: {local_model_path}", flush=True)
+    
+    # O LangChain passa a carregar o modelo diretamente do caminho local
+    return HuggingFaceEmbeddings(model_name=local_model_path)
 
 
 @st.cache_resource
